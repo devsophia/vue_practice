@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="../vue.js"></script>
+        
+    </head>
+    <body>
+        <div id="main">
+            <p v-if="isVisible"> you can see me now </p>
+            <a v-bind:href="url">where?</a><br/>
+            <a v-on:click="doSomething">what?</a><br/>
+            <a v-bind:[attributename]="url">...</a>
+            <form v-on:submit.prevent="onSubmit">
+                <button type="submit"></button>
+            </form>
+        </div>
+        <script>
+            var vm = new Vue({
+                el: '#main',
+                data: {
+                    // 엘리먼트의 속성이 아닌 경우에는 v-** 방식
+                    isVisible: true,
+                    // 엘리먼트의 속성인 경우에는 v-bind:** 방식
+                    url: 'https://www.naver.com',
+                    // 이벤트 연동인 경우에는 v-on:** 방식
+                    doSomething: function() {
+                        alert('Hello!');
+                    },
+                    // 브라우저가 모든 속성명을 소문자로 인식하기때문에 대문자 쓰지말것.
+                    // attributename자리에는 문자열만 올 수 있다.
+                    attributename: 'href',
+                    onSubmit: function() {
+                        alert("preventDefault() 호출됨");
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>
+

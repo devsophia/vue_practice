@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="../vue.js"></script>
+    </head>
+    <body>
+        <div id='main'>
+            <!--mustache 구문-->
+            <span>메세지 : {{ msg }}</span>
+
+            <!-- mustache 구문은 html이아닌 일반 텍스트로 데이터를 해석한다. -->
+            <!-- 실제 html을 출력하려면 v-html 디렉티브를 사용한다. -->
+            <p>Using mustaches: {{ rawHtml }}</p>
+            <p>Using v-html directive: <span v-html="rawHtml"></span></p>
+
+            <div v-bind:id="dynamicId"></div>
+
+            <button v-bind:disabled="isButtonDisabled">Button</button>
+            
+            <!-- 식이 오면 안되고, 단일 표현식만 올수있음 -->
+            <!-- 전역으로 사용가능한거에만 접근가능, 대신 사용자정의 전역에는 접근불가. -->
+            <br/>
+            {{ number + 1 }}<br/>
+            {{ ok ? 'YES' : 'NO' }}<br/>
+            {{ message.split('').reverse().join('') }}<br/>
+            {{ new Date() }}
+        </div>
+    </body>
+</html>
+
+<script>
+    var vm_1 = new Vue({
+        el: '#main',
+        data: {
+            msg: 'hello',
+            rawHtml: '<span style="color:red">this should be red.</span>',
+            dynamicId: 'YouCannotUseMustacheHere',
+            isButtonDisabled: true,
+            number: 9,
+            ok: true,
+            message: 'abcde'
+        }
+    })
+</script>
