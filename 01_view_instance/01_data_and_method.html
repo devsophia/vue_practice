@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="../vue.js"></script>
+    </head>
+    <body>
+        <div id='example'></div>
+    </body>
+</html>
+
+<script>
+    var data = { a : 1 }
+
+    var vm = new Vue({
+        el : '#example',
+        data : data
+    })
+
+    // vue 인스턴스에 있는 속성은 원본 데이터에 있는 값과 바인딩됨
+    alert(vm.a === data.a)
+
+    data.a = 2
+    alert(vm.a === data.a)
+
+    vm.a = 3
+    alert(vm.a === data.a)
+
+    // 하지만 중요한 것은, data에 있는 속성들은 인스턴스가 생성될 때 존재한 것들만 반응형이다.
+    // 새 속성 추가시 바인딩이 안 된다.
+    // 따라서 나중에 추가될 것 같은 속성은 초기값을 지정해 둬야한다.
+    data.b = 'Hello';
+    alert(vm.b)
+
+    // 데이터 속성 이외에도 유용한 인스턴스 속성 및 메소드 제공
+    // 사용자 속성과 구분하기위해 $접두사 사용
+    alert(vm.$data === data)
+    alert(vm.$el === document.getElementById('example'))
+</script>
