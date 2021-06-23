@@ -7,9 +7,22 @@
     <body>
         <div id="main">
             <p v-if="isVisible"> you can see me now </p>
+
+            <!--아래 세개는 같음-->
             <a v-bind:href="url">where?</a><br/>
+            <a :herf="url">where?</a><br/>
+            <a :[key]="url">where?</a><br/>
+            
+            <!--아래 두개는 같음-->
             <a v-on:click="doSomething">what?</a><br/>
-            <a v-bind:[attributename]="url">...</a>
+            <a @click="doSomething">what?</a><br/>
+
+            <!--아래 두개는 같음-->
+            <a v-bind:[attributename]="url">...</a><br/>
+            <a @[event]="doSomething">...</a>
+
+            <!--약어는 최종 렌더링 된 마크업에는 나타나지 않음-->
+
             <form v-on:submit.prevent="onSubmit">
                 <button type="submit"></button>
             </form>
@@ -26,12 +39,14 @@
                     doSomething: function() {
                         alert('Hello!');
                     },
+                    key: 'href',
                     // 브라우저가 모든 속성명을 소문자로 인식하기때문에 대문자 쓰지말것.
                     // attributename자리에는 문자열만 올 수 있다.
                     attributename: 'href',
                     onSubmit: function() {
                         alert("preventDefault() 호출됨");
-                    }
+                    },
+                    event: 'click'
                 }
             })
         </script>
