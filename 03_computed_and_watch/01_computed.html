@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="../vue.js"></script>
+    </head>
+    <body>
+        <div id="example">
+            <p>원본 메세지 : "{{ message }}"</p>
+            <p>역순으로 표현한 메세지 : "{{reversedMessage}}"</p>
+        </div>
+
+        <div id="demo">
+            {{ fullName }}
+        </div>
+
+        <div id="demo2">
+            {{ fullName }}
+        </div>
+    </body>
+
+<script>
+
+var vm = new Vue({
+    el : '#example',
+    data : {
+        message : '안녕하세요.'
+    },
+    computed : {
+        reversedMessage : function() {
+            // this 는 vm 인스턴스를 가리킴.
+            // vm.reversedMessage 속성에 대한 getter 함수
+            // Vue는 reversedMessage가 message에 의존하는 것을 알고 있기 때문에
+            // message가 바뀔 때 reversedMessage에 의존하는 바인딩을 모두 업데이트 한다.
+            return this.message.split('').reverse().join('')
+        }
+    },
+    methods : {
+        // 아래와 같이 함수로 만들어도 되지만,
+        // computed 속성을 사용할 때와의 차이점이 존재한다.
+        // 그것은 computed 속성을 사용할 때는 값이 캐싱되며,
+        // 해당 값은 종속된 대상인 message가 바뀔때만 업데이트 된다.
+        // 예를 들어 Date.now()를 computed 속성으로 사용하게 되면
+        // 현재 시간이 호출되지 않고 제일 처음의 시간만 캐싱될 것이다.
+        reversedMessage : function() {
+            return this.message.split('').reverse().join('')
+        }
+    }
+})
+
+var vm2 = new Vue({
+    el: '#demo',
+    data: {
+        firstName: 'Foo',
+        lastName: 'Bar',
+        fullName: 'Foo Bar'
+    },
+    // 해당 속성이 변경될 때 콜백으로 실행됨.
+    watch: {
+        firstName: function(val) {
+            this.fullName = val + ' ' + this.lastName
+        },
+        lastName: function(val) {
+            this.fullName = this.firstName + ' ' + val
+        }
+    }
+})
+
+var vm3 = new Vue({
+    el: '#demo2',
+    data: {
+        firstName : '',
+        lastName : ''
+    },
+    computed: {
+        fullName: {
+            get: function() {
+                return this.firstName + ' ' + this.lastName;
+            },
+            set: function(value) {
+                var names = value.split(' ')
+                this.firstName = names[0]
+                this.lastName = names[names.length - 1]
+            }
+        }
+    }
+})
+
+</script>
+
+</html>
+

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="../vue.js"></script>
+        <style>
+            body {
+                cursor: pointer;
+                user-select: none;
+            }
+            .done {
+                text-decoration: line-through;
+                color: #828282;
+            }
+            .important {
+                font-weight: bold;
+            }
+            .ready {
+                font-weight: bold;
+                color: red;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <!-- 객체 방식 : 문자열에 객체를 넣는다. -->
+            <!-- item.purchased 값이 true이면 클래스 이름 done을 부여하고, item.status 값이 true이면 클래스 이름 ready를 부여한다. -->
+            <div v-for="item in items" v-bind:class="{done: item.purchased, ready: item.status}" @click="toggleFn(item)">{{ item.subject }}</div>
+            <br/><br/>
+            
+            <!-- 배열 방식 : 문자열에 배열을 넣는다. -->
+            <div v-for="item in items" v-bind:class="[ item.purchased === true ? 'done' : 'important' ]">{{ item.subject }}</div>
+            <br/><br/>
+            <!-- 배열 사용하여 여러개의 조건사용 가능 -->
+            <!-- item.purchased 값이 true이면 클래스 이름 done을 부여하고, item.status 값이 true이면 ready를 부여한다. -->
+            <div v-for="item in items" v-bind:class="[ item.purchased ? 'done' : '', item.status ? 'ready' : '' ]">{{ item.subject }}</div>
+            <br/><br/>
+            <!-- 2개 이상의 클래스 함께 사용 가능 -->
+            <div v-for="item in items" v-bind:class="[ item.purchased ? 'done' : '', 'ready' ]">{{ item.subject }}</div>
+            <br/><br/>
+            <!-- shortcut 문법 -->
+            <div v-for="item in items" :class="[ item.purchased ? 'done' : '' ]">{{ item.subject }}</div>
+
+            <!-- 두 가지 방식 중 어떤 것을 사용하더라도 같은 내용 구현 가능 -->
+            <br/><br/>
+
+            <!-- 인라인 스타일 바인딩 -->
+            <div :style="{ display : 'flex', alignItems: 'center', color: 'red' }">hello world</div>
+        </div>
+    </body>
+</html>
+
+<script>
+
+class Item {
+    constructor(subject, purchased, status) {
+        this.subject = subject
+        this.purchased = purchased
+        this.status = status
+    }
+}
+
+var vm = new Vue({
+    el: '#app',
+    data: {
+        items: [ 
+            new Item('10 pens', false, true), 
+            new Item('20 bags', true, false), 
+            new Item('5 coffee', false, true), 
+            new Item('8 towels', true, false)
+        ]
+    },
+    methods: {
+        toggleFn(item) {
+            item.purchased = !item.purchased
+        }
+    }
+})
+
+</script>
