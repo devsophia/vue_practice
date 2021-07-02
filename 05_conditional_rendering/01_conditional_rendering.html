@@ -4,10 +4,68 @@
         <script src="../vue.js"></script>
     </head>
     <body>
+        <div id="view">
+            <h1 v-if="awesome">Vue is awesome!</h1>
+            <h1 v-else>Oh no ! TT</h1>
 
+            <!-- 여러개를 조건부 그룹으로 만들고 싶은 경우 template 태그 사용. 실제로 엘리먼트로 렌더링되지는 않음. -->
+            <template v-if="ok">
+                <h1>Title</h1>
+                <p>Paragraph 1</p>
+                <p>Paragraph 2</p>
+            </template>
+
+            <div v-if="type === 'A'">
+                A
+            </div>
+            <div v-else-if="type === 'B'">
+                B
+            </div>
+            <div v-else-if="type === 'C'">
+                C
+            </div>
+            <div v-else>
+                Not A/B/C
+            </div>
+
+            <!-- loginType이 바뀌어도 엘리먼트가 초기화 되지 않음 -> key 사용해야함 -->
+            <template v-if="loginType === 'username'">
+                <label>사용자 이름</label>
+                <input placeholder="사용자 이름을 입력하세요">
+            </template>
+            <template v-else>
+                <label>이메일</label>
+                <input placeholder="이메일 주소를 입력하세요">
+            </template>
+
+            <br/><br/>
+            <!-- input 엘리먼트가 초기화 됨, label 엘리먼트는 재사용됨 -->
+            <template v-if="loginType === 'username'">
+                <label>사용자 이름</label>
+                <input placeholder="사용자 이름을 입력하세요" key="username-input">
+            </template>
+            <template v-else>
+                <label>이메일</label>
+                <input placeholder="이메일 주소를 입력하세요" key="email-input">
+            </template>
+
+            <br/><br/>
+            <!-- v-show는 v-if와 달리 display 속성만 토글하고 항상 DOM에 남아있음. -->
+            <h1 v-show="ok">안녕하세요!</h1>
+        </div>
     </body>
 </html>
 
 <script>
-    
+
+var vm = new Vue({
+    el: '#view',
+    data: {
+        awesome: true,
+        ok: true,
+        type: 'A',
+        loginType: 'username'
+    }
+})
+
 </script>

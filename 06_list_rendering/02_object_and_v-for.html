@@ -4,10 +4,38 @@
         <script src="../vue.js"></script>
     </head>
     <body>
+        <div id="app">
+            <ul class="demo">
+                <li v-for="value in object">
+                    {{ value }}
+                </li>
+            </ul>
+    
+            <div v-for="(value, name) in object">
+                {{ name }} : {{ value }}
+            </div>
+            <br/>
 
+            <div v-for="(value, name, index) in object">
+                {{ index }}. {{ name }}: {{ value }}
+            </div>
+
+            <!-- 객체를 반복할 때 순서는 Object.keys()의 키 나열 순서에 따라 결정된다. -->
+        </div>
     </body>
 </html>
 
 <script>
     
+new Vue({
+    el: '#app',
+    data: {
+        object: {
+            title: 'How to do lists in Vue',
+            author: 'Jane Doe',
+            publishedAt: '2016-04-10'
+        }
+    }
+})
+
 </script>

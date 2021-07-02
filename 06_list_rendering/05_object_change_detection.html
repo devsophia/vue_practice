@@ -9,5 +9,31 @@
 </html>
 
 <script>
+    var vm = new Vue({
+        data: {
+            a: 1
+        }
+    })
+    // vm.a 는 반응형
+
+    vm.b = 2
+    // vm.b 는 반응형이 아님
+
+    var vm2 = new Vue({
+        data: {
+            userProfile: {
+                name: 'Anika'
+            }
+        }
+    })
+
+    // 객체에 반응형으로 추가하려면 아래 두가지를 사용해야함 
+    Vue.set(vm.userProfile, 'age', 27)
+    vm2.$set(vm.userProfile, 'age', 27)
+    // 아니면 아래와 같이 새 객체를 만드는 경우
+    Object.assign(vm.userProfile, {
+        age: 27,
+        favoriteColor: 'Vue Green'
+    })
     
 </script>
